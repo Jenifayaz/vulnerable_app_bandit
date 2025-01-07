@@ -27,7 +27,7 @@ jobs:
       run: pip install bandit
 
     - name: Run Bandit
-      run:  bandit -r . -c .github/workflows/bandit_scan.yml --output bandit_report.html --format html || true
+      run:  bandit -r . -c .github/workflows/bandit.yml --output bandit_report.html --format html || true
 
     - name: Upload Bandit Output
       uses: actions/upload-artifact@v3
