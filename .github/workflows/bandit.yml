@@ -1,0 +1,36 @@
+name: Bandit Security Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  bandit-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Install Bandit
+      run: pip install bandit
+
+    - name: Run Bandit
+      run: bandit -r . -f json -o bandit-output.json
+
+    - name: Upload Bandit Output
+      uses: actions/upload-artifact@v3
+      with:
+        name: bandit-report
+        path: bandit-output.json
